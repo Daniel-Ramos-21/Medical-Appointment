@@ -1,0 +1,38 @@
+﻿@page
+@model PresentacionUI.Pages.DoctoresModel
+@{
+    ViewData["Title"] = "Doctores";
+}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Nuestros Especialistas</h2>
+    <div class="row">
+        <!--Aqui instanciamos la variable doctor la lista medicos -->
+        <!--y que lo recorra en un foreach la lista medicos id 1 id 2 etc-->
+        @foreach (var doctor in Model.Doctores)
+        {
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card border-0 text-center">
+                    
+                    <div class="d-flex justify-content-center">
+                        <!--Para llamar los elementos de lista ocupamos la varible doctor -->
+                        <!--y Iteramos nuetras entidades-->
+                        <img src="@doctor.Foto"
+                             alt="Doctor"
+                             class="card-img-top p-2 rounded-4 "
+                             style="width: auto; height: 300px; background-color: #f8f9fa;">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mt-2">
+                            Dr. @doctor.Nombre @doctor.Apellido
+                        </h5>
+                        
+                        <p class="text-muted text-uppercase small ls-wide">
+                            @(doctor.Especialidad?.Nombre_especialidad)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
