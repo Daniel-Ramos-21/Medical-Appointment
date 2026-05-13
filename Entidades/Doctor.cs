@@ -52,5 +52,9 @@ namespace Entidades
 
         [StringLength(200)]
         public string Foto { get; set; }
+
+        [Display(Name = "Perfil Profesional")]
+        [StringLength(500)]
+        public string Perfil { get; set; }
     }
 }

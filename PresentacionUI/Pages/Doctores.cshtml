@@ -3,6 +3,19 @@
 @{
     ViewData["Title"] = "Doctores";
 }
+<style>
+    .container-info{
+        overflow : hidden;
+        border-radius: 1rem;
+        transition: transform 0.3s ease-in-out;
+        object-fit: cover;
+    }
+
+    .container-info:hover{
+        transform: scale(1.2);
+    }
+
+</style>
 <div class="container mt-4">
     <h2 class="text-center mb-4">Nuestros Especialistas</h2>
     <div class="row">
@@ -10,9 +23,9 @@
         <!--y que lo recorra en un foreach la lista medicos id 1 id 2 etc-->
         @foreach (var doctor in Model.Doctores)
         {
+            
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card border-0 text-center">
-                    
+                <div class="img-container card border-0 text-center">
                     <div class="d-flex justify-content-center">
                         <!--Para llamar los elementos de lista ocupamos la varible doctor -->
                         <!--y Iteramos nuetras entidades-->
@@ -30,6 +43,10 @@
                         <p class="text-muted text-uppercase small ls-wide">
                             @(doctor.Especialidad?.Nombre_especialidad)
                         </p>
+                        <hr class="mx-auto w-25" />
+                        <a href="/Informacion/@doctor.Id_Doctor" class="container-info btn btn-outline-dark btn-sm rounded-pill px-4">
+                            Ver Información
+                        </a>
                     </div>
                 </div>
             </div>
