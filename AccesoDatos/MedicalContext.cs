@@ -26,13 +26,16 @@ namespace AccesoDatos
 
             public DbSet<Especialidad> Especialidades { get; set; }
 
+        //
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);//Llamamos a la configuracion base de entity framework
 
+            // Configuración de la (Seed Data) para la tabla Especialidad.
             modelBuilder.Entity<Especialidad>().HasData(
                 new List<Especialidad>
                 {
+                    // Se definen los registros iniciales que se insertarán en la base de datos.
                     new Especialidad { Id_Especialidad = 1, Nombre_especialidad = "Medicina General"},
                     new Especialidad { Id_Especialidad = 2, Nombre_especialidad = "Odontología"},
                     new Especialidad { Id_Especialidad = 3, Nombre_especialidad = "Pedriatría"},
@@ -42,42 +45,43 @@ namespace AccesoDatos
                 }
                 );
 
+            // Configuración de la (Seed Data) para la tabla Doctor.
             modelBuilder.Entity<Doctor>().HasData(
-                new List<Doctor>
-                {
+                new List<Doctor>                {
+                    // Se definen los registros iniciales que se insertarán en la base de datos.
                     //ID 1
-                    new Doctor {
-                        Id_Doctor = 1, 
-                        Nombre= "Carlos", Apellido="Martínez", 
+                    new Doctor{
+                        Id_Doctor = 1,
+                        Nombre= "Carlos", Apellido="Martínez",
                         AlmaMater="Universidad de El Salvador",
-                        HoraEntrada = new TimeSpan(08, 00, 00), 
-                        HoraSalida = new TimeSpan(03,00,00), 
+                        HoraEntrada = new TimeSpan(08, 00, 00),
+                        HoraSalida = new TimeSpan(15,00,00),
                         Id_Especialidad = 1,
-                        Foto = "/img/doctores/doc1.png", 
+                        Foto = "/img/doctores/doc1.png",
                         Perfil= "Médico general con enfoque en atención primaria y medicina preventiva. Graduado de la Universidad de El Salvador, cuenta con amplia experiencia en el manejo de enfermedades crónicas y seguimiento integral del paciente adulto."
                     },
                     //ID 2
                     new Doctor {
-                        Id_Doctor = 2, 
-                        Nombre= "Lucía", 
-                        Apellido="Fernández", 
+                        Id_Doctor = 2,
+                        Nombre= "Lucía",
+                        Apellido="Fernández",
                         AlmaMater="Universidad Dr. José Matías Delgado",
-                        HoraEntrada = new TimeSpan(08, 00, 00), 
-                        HoraSalida = new TimeSpan(04,00,00), 
+                        HoraEntrada = new TimeSpan(08, 00, 00),
+                        HoraSalida = new TimeSpan(16,00,00),
                         Id_Especialidad = 1,
-                        Foto = "/img/doctores/doc2.png", 
+                        Foto = "/img/doctores/doc2.png",
                         Perfil= "Especialista en medicina comunitaria con formación en la Universidad Dr. José Matías Delgado. Experta en diagnósticos clínicos tempranos, promoción de la salud y atención de urgencias menores en el ámbito clínico privado."
                     },
                     //ID 3
                     new Doctor {
-                        Id_Doctor = 3, 
-                        Nombre= "Elena", 
-                        Apellido="Rivas", 
+                        Id_Doctor = 3,
+                        Nombre= "Elena",
+                        Apellido="Rivas",
                         AlmaMater="Universidad Evangélica",
-                        HoraEntrada = new TimeSpan(09, 00, 00), 
-                        HoraSalida = new TimeSpan(05,00,00), 
+                        HoraEntrada = new TimeSpan(09, 00, 00),
+                        HoraSalida = new TimeSpan(17,00,00),
                         Id_Especialidad = 5,
-                        Foto = "/img/doctores/doc3.png", 
+                        Foto = "/img/doctores/doc3.png",
                         Perfil = "Psicóloga clínica con maestría en terapia cognitivo-conductual. Se especializa en el tratamiento de trastornos de ansiedad, depresión y manejo del estrés, brindando un enfoque humano y empático en cada sesión terapéutica."
                     },
                     //ID 4
@@ -88,7 +92,7 @@ namespace AccesoDatos
                         Apellido = "Orellana",
                         AlmaMater = "Universidad de El Salvador",
                         HoraEntrada = new TimeSpan(11, 0, 0),
-                        HoraSalida = new TimeSpan(07, 0, 0),
+                        HoraSalida = new TimeSpan(19, 0, 0),
                         Id_Especialidad = 5,
                         Foto = "/img/doctores/doc4.png",
                         Perfil = "Profesional de la salud mental graduado de la UES, con experticia en psicología organizacional y apoyo psicopedagógico. Enfocado en el desarrollo de resiliencia y salud mental en entornos laborales y académicos."
@@ -101,7 +105,7 @@ namespace AccesoDatos
                     Apellido = "Zelaya",
                     AlmaMater = "Universidad de El Salvador",
                     HoraEntrada = new TimeSpan(10, 0, 0),
-                    HoraSalida = new TimeSpan(07, 0, 0),
+                    HoraSalida = new TimeSpan(18, 0, 0),
                     Id_Especialidad = 2,
                     Foto = "/img/doctores/doc6.png",
                     Perfil = "Odontóloga integral con énfasis en rehabilitación oral y estética dental. Graduada de la Universidad de El Salvador, es experta en tratamientos preventivos y restaurativos, enfocada en devolver la funcionalidad y armonía estética a la sonrisa."
@@ -114,7 +118,7 @@ namespace AccesoDatos
                         Apellido = "Arias",
                         AlmaMater="Universidad Dr. José Matías Delgado",
                         HoraEntrada = new TimeSpan(07,30,0),
-                        HoraSalida = new TimeSpan(03,30,0),
+                        HoraSalida = new TimeSpan(15,30,0),
                         Id_Especialidad = 3,
                         Foto = "/img/doctores/doc7.png",
                         Perfil = "Especialista en el cuidado integral de la infancia y adolescencia. Con formación en la Universidad Dr. José Matías Delgado, destaca por su paciencia y precisión en el control de niño sano y desarrollo infantil."
@@ -127,7 +131,7 @@ namespace AccesoDatos
                         Apellido = "Méndez",
                         AlmaMater = "Universidad de El Salvador",
                         HoraEntrada = new TimeSpan(08,30,0),
-                        HoraSalida = new TimeSpan(04,30,0),
+                        HoraSalida = new TimeSpan(16,30,0),
                         Id_Especialidad = 4,
                         Foto = "/img/doctores/doc8.png",
                         Perfil = "Ginecólogo y obstetra dedicado a la salud integral de la mujer en todas sus etapas. Experto en control prenatal, planificación familiar y cirugía ginecológica mínimamente invasiva."

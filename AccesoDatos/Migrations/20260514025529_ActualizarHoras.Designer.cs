@@ -4,6 +4,7 @@ using AccesoDatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    partial class MedicalContextModelSnapshot : ModelSnapshot
+    [Migration("20260514025529_ActualizarHoras")]
+    partial class ActualizarHoras
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +79,7 @@ namespace AccesoDatos.Migrations
                             Id_Doctor = 1,
                             AlmaMater = "Universidad de El Salvador",
                             Apellido = "Martínez",
-                            Foto = "/img/doctores/doc1.png",
+                            Foto = "/img/Doctor/doc1.png",
                             HoraEntrada = new TimeSpan(0, 8, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 15, 0, 0, 0),
                             Id_Especialidad = 1,
