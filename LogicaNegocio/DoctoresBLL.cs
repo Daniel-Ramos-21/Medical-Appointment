@@ -30,6 +30,8 @@ namespace LogicaNegocio
             return _context.Doctors
             //Esto representaria un JOIN entre la tabla doctors y especialidad
             .Include(m => m.Especialidad)
+            //Esto representaria un JOIN entre la tabla doctors y usuario
+            .Include(u => u.usuario)
             //Y que lo muestre en forma de lista
             .ToList();
         }
@@ -42,6 +44,7 @@ namespace LogicaNegocio
             return _context.Doctors
             //Esto representaria un JOIN entre la tabla doctirs y especialidades
             .Include(d => d.Especialidad)
+            .Include(u => u.usuario)
             //busca el id de la tabla que coincida con el id enviado por parametro
             //el equivalente a  where Id_Doctor = id.
             .FirstOrDefault(d => d.Id_Doctor == id)!;

@@ -22,8 +22,8 @@ namespace Entidades
         [Required]
         //Establece la cantidad de caracteres del campo
         [StringLength(50)]
-        public string Nombre_especialidad { get; set; }
+        public string Nombre_especialidad { get; set; } = null!;
         //Indica que puede tener una relacion 1, N entre Especialidad y Medicos
-        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Doctor> Doctores { get; set; } = new List<Doctor>();
     }
 }

@@ -26,6 +26,8 @@ namespace AccesoDatos
 
             public DbSet<Especialidad> Especialidades { get; set; }
 
+            public DbSet<Usuarios> Usuarios { get; set;  }
+
         //
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,10 +40,102 @@ namespace AccesoDatos
                     // Se definen los registros iniciales que se insertarán en la base de datos.
                     new Especialidad { Id_Especialidad = 1, Nombre_especialidad = "Medicina General"},
                     new Especialidad { Id_Especialidad = 2, Nombre_especialidad = "Odontología"},
-                    new Especialidad { Id_Especialidad = 3, Nombre_especialidad = "Pedriatría"},
+                    new Especialidad { Id_Especialidad = 3, Nombre_especialidad = "Pediatría"},
                     new Especialidad { Id_Especialidad = 4, Nombre_especialidad = "Ginecología"},
                     new Especialidad { Id_Especialidad = 5, Nombre_especialidad = "Psicología"},
-                    new Especialidad { Id_Especialidad = 6, Nombre_especialidad = "Oftalmologia"}
+                    new Especialidad { Id_Especialidad = 6, Nombre_especialidad = "Oftalmología"}
+                }
+                );
+
+            string passwordHas = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG";
+            //Configuracion de la (Seed Data) para la  tabla usuarios
+            modelBuilder.Entity<Usuarios>().HasData(
+                new List<Usuarios>
+                {
+                    new Usuarios {
+                        Id_Usuario = 1,
+                        DUI = "10000000-1",
+                        Nombre= "Carlos",
+                        Apellido="Martínez",
+                        IsDoctor = true,
+                        Email= "carlos.martinez@clinica.com",
+                        password = passwordHas
+                    },
+                    new Usuarios {
+                        Id_Usuario = 2,
+                        DUI = "10000001-2",
+                        Nombre = "Lucía",
+                        Apellido = "Fernández",
+                        IsDoctor = true,
+                        Email = "lucia.fernandez@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 3,
+                        DUI = "10000002-3",
+                        Nombre = "Elena",
+                        Apellido = "Rivas",
+                        IsDoctor = true,
+                        Email = "elena.rivas@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 4,
+                        DUI = "10000003-4",
+                        Nombre = "Samuel",
+                        Apellido = "Orellana",
+                        IsDoctor = true,
+                        Email = "samuel.orellana@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 5,
+                        DUI = "10000004-5",
+                        Nombre = "Beatriz",
+                        Apellido = "Zelaya",
+                        IsDoctor = true,
+                        Email = "beatriz.zelaya@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 6,
+                        DUI = "10000005-6",
+                        Nombre = "Patricia",
+                        Apellido = "Arias",
+                        IsDoctor = true,
+                        Email = "patricia.arias@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 7,
+                        DUI = "10000006-7",
+                        Nombre = "Gustavo",
+                        Apellido = "Méndez",
+                        IsDoctor = true,
+                        Email = "gustavo.mendez@clinica.com",
+                        password = passwordHas
+                    },
+
+                    new Usuarios
+                    {
+                        Id_Usuario = 8,
+                        DUI = "10000007-8",
+                        Nombre = "Ricardo",
+                        Apellido = "Valle",
+                        IsDoctor = true,
+                        Email = "ricardo.valle@clinica.com",
+                        password = passwordHas
+                    }
                 }
                 );
 
@@ -52,7 +146,7 @@ namespace AccesoDatos
                     //ID 1
                     new Doctor{
                         Id_Doctor = 1,
-                        Nombre= "Carlos", Apellido="Martínez",
+                        Id_Usuario = 1,
                         AlmaMater="Universidad de El Salvador",
                         HoraEntrada = new TimeSpan(08, 00, 00),
                         HoraSalida = new TimeSpan(15,00,00),
@@ -63,8 +157,7 @@ namespace AccesoDatos
                     //ID 2
                     new Doctor {
                         Id_Doctor = 2,
-                        Nombre= "Lucía",
-                        Apellido="Fernández",
+                        Id_Usuario = 2,
                         AlmaMater="Universidad Dr. José Matías Delgado",
                         HoraEntrada = new TimeSpan(08, 00, 00),
                         HoraSalida = new TimeSpan(16,00,00),
@@ -75,8 +168,7 @@ namespace AccesoDatos
                     //ID 3
                     new Doctor {
                         Id_Doctor = 3,
-                        Nombre= "Elena",
-                        Apellido="Rivas",
+                        Id_Usuario = 3,
                         AlmaMater="Universidad Evangélica",
                         HoraEntrada = new TimeSpan(09, 00, 00),
                         HoraSalida = new TimeSpan(17,00,00),
@@ -88,8 +180,7 @@ namespace AccesoDatos
                     new Doctor
                     {
                         Id_Doctor = 4,
-                        Nombre = "Samuel",
-                        Apellido = "Orellana",
+                        Id_Usuario = 4,
                         AlmaMater = "Universidad de El Salvador",
                         HoraEntrada = new TimeSpan(11, 0, 0),
                         HoraSalida = new TimeSpan(19, 0, 0),
@@ -101,8 +192,7 @@ namespace AccesoDatos
                     new Doctor
                     {
                     Id_Doctor = 5,
-                    Nombre = "Beatriz",
-                    Apellido = "Zelaya",
+                    Id_Usuario = 5,
                     AlmaMater = "Universidad de El Salvador",
                     HoraEntrada = new TimeSpan(10, 0, 0),
                     HoraSalida = new TimeSpan(18, 0, 0),
@@ -114,8 +204,7 @@ namespace AccesoDatos
                     new Doctor
                     {
                         Id_Doctor = 6,
-                        Nombre = "Patricia",
-                        Apellido = "Arias",
+                        Id_Usuario = 6,
                         AlmaMater="Universidad Dr. José Matías Delgado",
                         HoraEntrada = new TimeSpan(07,30,0),
                         HoraSalida = new TimeSpan(15,30,0),
@@ -127,8 +216,7 @@ namespace AccesoDatos
                     new Doctor
                     {
                         Id_Doctor = 7,
-                        Nombre = "Gustavo",
-                        Apellido = "Méndez",
+                        Id_Usuario = 7,
                         AlmaMater = "Universidad de El Salvador",
                         HoraEntrada = new TimeSpan(08,30,0),
                         HoraSalida = new TimeSpan(16,30,0),
@@ -140,8 +228,7 @@ namespace AccesoDatos
                     new Doctor
                     {
                         Id_Doctor = 8,
-                        Nombre = "Ricardo",
-                        Apellido = "Valle",
+                        Id_Usuario = 8,
                         AlmaMater = "Universidad Alberto Masferrer",
                         HoraEntrada = new TimeSpan(08,00,0),
                         HoraSalida = new TimeSpan(12,00,0),
