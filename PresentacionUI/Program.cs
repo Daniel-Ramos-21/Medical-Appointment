@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 //Esta parte es para decirle al controlador que cada vez que se necesite usar
@@ -13,7 +14,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<MedicalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion"))
 );
+builder.Services.AddHttpClient<CitaBLL>();
 builder.Services.AddScoped<DoctoresBLL>();
+
 //Genaera la configucion de la aplicacion
 var app = builder.Build();
 

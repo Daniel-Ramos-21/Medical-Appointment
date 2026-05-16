@@ -1,5 +1,96 @@
 ﻿@page
 @model PresentacionUI.Pages.CitasModel
 @{
+    ViewData["Title"] = "Agendar Cita Medica";
+}
+<h1>Agendar Nueva Cita</h1>
+@if (!string.IsNullOrEmpty(Model.MensajeError))
+{
+    <div class="alert alert-danger">@Model.MensajeError</div>
 }
 
+<form method="post">
+    <div class="form-group mb-3">
+        <label>DUI del Paciente:</label>
+        <input asp-for="dui" id="txtdui" class="form-control" placeholder="00000000-0" required />
+    </div>
+    
+    <div class="form-group mb-3">
+        <label>Nombre del Paciente: </label>
+        <input asp-for="NombrePaciente" type="text" id="txtnombre"  class="form-control" readonly placeholder="Se llena automaticamente" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Apellido del Paciente: </label>
+        <input asp-for="ApellidoPaciente" type="text" id="txtapellido" class="form-control" readonly placeholder="Se llena automaticamente" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>ID del Doctor:</label>
+        <select asp-for="id_doctor" id="selectdoctor"  class="form-control" required >
+            <option value="">Seleccione un Doctor</option>
+            @foreach (var doctor in Model.Especialidades)
+            {
+                <option value="@doctor.Id_Especialidad">@doctor.Nombre_especialidad</option>
+            }
+         </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Fecha de la Cita:</label>
+        <input asp-for="fecha" type="date" class="form-control" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Hora de la Cita:</label>
+        <input asp-for="hora" type="time" class="form-control" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Motivo de la Consulta:</label>
+        <textarea asp-for="motivo" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar Cita</button>
+</form>
+<script>
+        //escuche el evento change usuario escribe un DUI
+        document.getElementById("txtdui").addEventListener("change", async function () {
+        // Obtiene el DUI
+        const duiIngresado = this.value.trim();
+        //Obtiene las referencias a los inputs del form
+        const inputNombre = document.getElementById("txtnombre");
+        const inputApellido = document.getElementById("txtapellido");
+
+        // Si el campo está vacío, limpiamos los inputs de nombres
+        if (duiIngresado === "") {
+            inputNombre.value = "";
+            inputApellido.value = "";
+            return;
+        }
+
+        try {
+            // Hacemos la petición al handler al metodo Paciente pasando el DUI como parámetro
+            const respuesta = await fetch(`?handler=Paciente&dui=${encodeURIComponent(duiIngresado)}`);
+            //Convertimos los datos del objeto en formato json
+            const datos = await respuesta.json();
+
+            if (datos.encontrado) {
+                // Asignamos los valores devueltos a los inputs correspondientes
+                inputNombre.value = datos.nombre;
+                inputApellido.value = datos.apellido;
+            
+               
+            } else {
+                // Si el paciente no existe, limpiamos y alertamos visualmente
+                inputNombre.value = "";
+                inputApellido.value = "";
+                inputNombre.classList.add("is-invalid");
+                alert("El DUI ingresado no pertenece a ningún paciente registrado.");
+            }
+        } catch (error) {
+            console.error("Error al buscar el paciente:", error);
+        }
+    });
+</script>
+                                                                               

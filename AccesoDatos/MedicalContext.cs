@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace AccesoDatos
 {        
@@ -28,10 +29,31 @@ namespace AccesoDatos
 
             public DbSet<Usuarios> Usuarios { get; set;  }
 
+            public DbSet<Citas> Citas { get; set; }
+
         //
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);//Llamamos a la configuracion base de entity framework
+
+            modelBuilder.Entity<Citas>() //Seleccionamos la entidad
+                .HasOne(c => c.Paciente) //Definimos que cita tiene objeto Paciente
+                .WithMany(u => u.CitasPaciente) //Un paciente tiene muchas citas (1---*)
+                .HasForeignKey(c => c.Id_Paciente) //Especificamos la propiedad que es su llave foranea
+                .OnDelete(DeleteBehavior.Restrict); // Esta linea establece que las tablas es tan conectadas y si se intenta borrar
+                                                    //la tabla padre lanzara una execepcion.
+
+            modelBuilder.Entity<Citas>()
+                .HasOne(c => c.Doctor)
+                .WithMany(u => u.CitasRegistradas)
+                .HasForeignKey(c => c.Id_doctor)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne(d => d.usuario)
+                .WithMany()
+                .HasForeignKey(d => d.Id_Usuario)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configuración de la (Seed Data) para la tabla Especialidad.
             modelBuilder.Entity<Especialidad>().HasData(
@@ -239,6 +261,9 @@ namespace AccesoDatos
 
                 }
                 );
+
+            
+
         }
 
     }

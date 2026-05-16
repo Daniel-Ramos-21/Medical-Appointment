@@ -13,10 +13,11 @@ namespace PresentacionUI.Pages
     public class DoctoresModel : PageModel
     {
         //Campo privado que nos sirva solo como lectura del context
+
         private readonly DoctoresBLL _doctorBLL;
 
-        //Constructor del medicalContext
-        //y guarda la conexion en mi variable privada
+
+        //Inyeccion de dependencias
         public DoctoresModel(DoctoresBLL doctoresBLL)
         {
             _doctorBLL = doctoresBLL;

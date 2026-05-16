@@ -44,6 +44,9 @@ namespace Entidades
         [Required(ErrorMessage = "La constraseña es requerida.")]
         [StringLength(255)]
         public string password { get; set; } = null!;
-       
+
+        public virtual ICollection<Citas> CitasPaciente { get; set; } = new List<Citas>();
+
+        
     }
 }

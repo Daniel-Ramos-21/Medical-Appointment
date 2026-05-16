@@ -49,5 +49,7 @@ namespace Entidades
         [Display(Name = "Perfil Profesional")]
         [StringLength(500)]
         public string? Perfil { get; set; } = null!;
+
+        public virtual ICollection<Citas> CitasRegistradas { get; set; } = new List<Citas>();
     }
 }
