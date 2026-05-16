@@ -15,8 +15,5 @@ namespace Entidades
 
         public string Name { get; set; }
 
-        public int Dia => Date.Day;
-
-        public int Mes => Date.Month;
     }
 }

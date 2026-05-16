@@ -22,6 +22,50 @@ namespace AccesoDatos.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Entidades.Citas", b =>
+                {
+                    b.Property<int>("Id_Citas")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Citas"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Id_Paciente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_doctor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("doctor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("paciente")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_Citas");
+
+                    b.HasIndex("Id_Paciente");
+
+                    b.HasIndex("Id_doctor");
+
+                    b.ToTable("Citas");
+                });
+
             modelBuilder.Entity("Entidades.Doctor", b =>
                 {
                     b.Property<int>("Id_Doctor")
@@ -333,6 +377,25 @@ namespace AccesoDatos.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entidades.Citas", b =>
+                {
+                    b.HasOne("Entidades.Usuarios", "Paciente")
+                        .WithMany("CitasPaciente")
+                        .HasForeignKey("Id_Paciente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Entidades.Doctor", "Doctor")
+                        .WithMany("CitasRegistradas")
+                        .HasForeignKey("Id_doctor")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Paciente");
+                });
+
             modelBuilder.Entity("Entidades.Doctor", b =>
                 {
                     b.HasOne("Entidades.Especialidad", "Especialidad")
@@ -344,7 +407,7 @@ namespace AccesoDatos.Migrations
                     b.HasOne("Entidades.Usuarios", "usuario")
                         .WithMany()
                         .HasForeignKey("Id_Usuario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Especialidad");
@@ -352,9 +415,19 @@ namespace AccesoDatos.Migrations
                     b.Navigation("usuario");
                 });
 
+            modelBuilder.Entity("Entidades.Doctor", b =>
+                {
+                    b.Navigation("CitasRegistradas");
+                });
+
             modelBuilder.Entity("Entidades.Especialidad", b =>
                 {
                     b.Navigation("Doctores");
+                });
+
+            modelBuilder.Entity("Entidades.Usuarios", b =>
+                {
+                    b.Navigation("CitasPaciente");
                 });
 #pragma warning restore 612, 618
         }
