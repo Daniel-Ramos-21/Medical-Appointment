@@ -40,14 +40,15 @@ namespace LogicaNegocio
         //tipo entero que representara nuestro id
         public Doctor ObtenerInforID(int id)
         {
-            //Decimos con que tabla vamos a trabajar
             return _context.Doctors
-            //Esto representaria un JOIN entre la tabla doctirs y especialidades
-            .Include(d => d.Especialidad)
-            .Include(u => u.usuario)
-            //busca el id de la tabla que coincida con el id enviado por parametro
-            //el equivalente a  where Id_Doctor = id.
-            .FirstOrDefault(d => d.Id_Doctor == id)!;
+                //Esto representaria un JOIN entre la tabla doctirs y especialidades
+                .Include(d => d.Especialidad)
+                .Include(u => u.usuario)
+                //busca el id de la tabla que coincida con el id enviado por parametro
+                //el equivalente a  where Id_Doctor = id.
+                .FirstOrDefault(d => d.Id_Doctor == id)!;
+        
+
         }
     }
 }
