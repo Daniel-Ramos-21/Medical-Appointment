@@ -2,6 +2,7 @@ using Entidades;
 using LogicaNegocio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace PresentacionUI.Pages
 {
@@ -25,9 +26,9 @@ namespace PresentacionUI.Pages
             Doctores = _doctorBLL.ObtenerInforID(id);
 
             //Si el id no exite lo retorna al apartedo original de doctores.
-            if (Doctores == null)
+            if (Doctores == null )
             {
-                return RedirectToPage("/Pages_Doctores");
+                return RedirectToPage("./Doctores");
             }
             //Si el id existe carga la pagina de Informacion.cshtml.
             return Page();

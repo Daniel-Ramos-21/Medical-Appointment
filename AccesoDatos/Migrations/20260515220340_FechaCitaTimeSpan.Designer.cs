@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    [Migration("20260514025529_ActualizarHoras")]
-    partial class ActualizarHoras
+    [Migration("20260515220340_FechaCitaTimeSpan")]
+    partial class FechaCitaTimeSpan
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,50 @@ namespace AccesoDatos.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Entidades.Citas", b =>
+                {
+                    b.Property<int>("Id_Citas")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Citas"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Id_Paciente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_doctor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Motivo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("doctor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("paciente")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_Citas");
+
+                    b.HasIndex("Id_Paciente");
+
+                    b.HasIndex("Id_doctor");
+
+                    b.ToTable("Citas");
+                });
 
             modelBuilder.Entity("Entidades.Doctor", b =>
                 {
@@ -38,13 +82,7 @@ namespace AccesoDatos.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<string>("Foto")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -57,19 +95,18 @@ namespace AccesoDatos.Migrations
                     b.Property<int>("Id_Especialidad")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Id_Usuario")
+                        .HasColumnType("int");
 
                     b.Property<string>("Perfil")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id_Doctor");
 
                     b.HasIndex("Id_Especialidad");
+
+                    b.HasIndex("Id_Usuario");
 
                     b.ToTable("Doctors");
 
@@ -78,96 +115,88 @@ namespace AccesoDatos.Migrations
                         {
                             Id_Doctor = 1,
                             AlmaMater = "Universidad de El Salvador",
-                            Apellido = "Martínez",
-                            Foto = "/img/Doctor/doc1.png",
+                            Foto = "/img/doctores/doc1.png",
                             HoraEntrada = new TimeSpan(0, 8, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 15, 0, 0, 0),
                             Id_Especialidad = 1,
-                            Nombre = "Carlos",
+                            Id_Usuario = 1,
                             Perfil = "Médico general con enfoque en atención primaria y medicina preventiva. Graduado de la Universidad de El Salvador, cuenta con amplia experiencia en el manejo de enfermedades crónicas y seguimiento integral del paciente adulto."
                         },
                         new
                         {
                             Id_Doctor = 2,
                             AlmaMater = "Universidad Dr. José Matías Delgado",
-                            Apellido = "Fernández",
                             Foto = "/img/doctores/doc2.png",
                             HoraEntrada = new TimeSpan(0, 8, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 16, 0, 0, 0),
                             Id_Especialidad = 1,
-                            Nombre = "Lucía",
+                            Id_Usuario = 2,
                             Perfil = "Especialista en medicina comunitaria con formación en la Universidad Dr. José Matías Delgado. Experta en diagnósticos clínicos tempranos, promoción de la salud y atención de urgencias menores en el ámbito clínico privado."
                         },
                         new
                         {
                             Id_Doctor = 3,
                             AlmaMater = "Universidad Evangélica",
-                            Apellido = "Rivas",
                             Foto = "/img/doctores/doc3.png",
                             HoraEntrada = new TimeSpan(0, 9, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 17, 0, 0, 0),
                             Id_Especialidad = 5,
-                            Nombre = "Elena",
+                            Id_Usuario = 3,
                             Perfil = "Psicóloga clínica con maestría en terapia cognitivo-conductual. Se especializa en el tratamiento de trastornos de ansiedad, depresión y manejo del estrés, brindando un enfoque humano y empático en cada sesión terapéutica."
                         },
                         new
                         {
                             Id_Doctor = 4,
                             AlmaMater = "Universidad de El Salvador",
-                            Apellido = "Orellana",
                             Foto = "/img/doctores/doc4.png",
                             HoraEntrada = new TimeSpan(0, 11, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 19, 0, 0, 0),
                             Id_Especialidad = 5,
-                            Nombre = "Samuel",
+                            Id_Usuario = 4,
                             Perfil = "Profesional de la salud mental graduado de la UES, con experticia en psicología organizacional y apoyo psicopedagógico. Enfocado en el desarrollo de resiliencia y salud mental en entornos laborales y académicos."
                         },
                         new
                         {
                             Id_Doctor = 5,
                             AlmaMater = "Universidad de El Salvador",
-                            Apellido = "Zelaya",
                             Foto = "/img/doctores/doc6.png",
                             HoraEntrada = new TimeSpan(0, 10, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 18, 0, 0, 0),
                             Id_Especialidad = 2,
-                            Nombre = "Beatriz",
+                            Id_Usuario = 5,
                             Perfil = "Odontóloga integral con énfasis en rehabilitación oral y estética dental. Graduada de la Universidad de El Salvador, es experta en tratamientos preventivos y restaurativos, enfocada en devolver la funcionalidad y armonía estética a la sonrisa."
                         },
                         new
                         {
                             Id_Doctor = 6,
                             AlmaMater = "Universidad Dr. José Matías Delgado",
-                            Apellido = "Arias",
                             Foto = "/img/doctores/doc7.png",
                             HoraEntrada = new TimeSpan(0, 7, 30, 0, 0),
                             HoraSalida = new TimeSpan(0, 15, 30, 0, 0),
                             Id_Especialidad = 3,
-                            Nombre = "Patricia",
+                            Id_Usuario = 6,
                             Perfil = "Especialista en el cuidado integral de la infancia y adolescencia. Con formación en la Universidad Dr. José Matías Delgado, destaca por su paciencia y precisión en el control de niño sano y desarrollo infantil."
                         },
                         new
                         {
                             Id_Doctor = 7,
                             AlmaMater = "Universidad de El Salvador",
-                            Apellido = "Méndez",
                             Foto = "/img/doctores/doc8.png",
                             HoraEntrada = new TimeSpan(0, 8, 30, 0, 0),
                             HoraSalida = new TimeSpan(0, 16, 30, 0, 0),
                             Id_Especialidad = 4,
-                            Nombre = "Gustavo",
+                            Id_Usuario = 7,
                             Perfil = "Ginecólogo y obstetra dedicado a la salud integral de la mujer en todas sus etapas. Experto en control prenatal, planificación familiar y cirugía ginecológica mínimamente invasiva."
                         },
                         new
                         {
                             Id_Doctor = 8,
                             AlmaMater = "Universidad Alberto Masferrer",
-                            Apellido = "Valle",
                             Foto = "/img/doctores/doc5.png",
                             HoraEntrada = new TimeSpan(0, 8, 0, 0, 0),
                             HoraSalida = new TimeSpan(0, 12, 0, 0, 0),
                             Id_Especialidad = 6,
-                            Nombre = "Ricardo",
+                            Id_Usuario = 8,
                             Perfil = "Médico cirujano oftalmólogo con especialización en el diagnóstico de patologías oculares, corrección de errores refractivos y prevención del glaucoma. Comprometido con la salud visual de sus pacientes."
                         });
                 });
@@ -203,7 +232,7 @@ namespace AccesoDatos.Migrations
                         new
                         {
                             Id_Especialidad = 3,
-                            Nombre_especialidad = "Pedriatría"
+                            Nombre_especialidad = "Pediatría"
                         },
                         new
                         {
@@ -218,24 +247,190 @@ namespace AccesoDatos.Migrations
                         new
                         {
                             Id_Especialidad = 6,
-                            Nombre_especialidad = "Oftalmologia"
+                            Nombre_especialidad = "Oftalmología"
                         });
+                });
+
+            modelBuilder.Entity("Entidades.Usuarios", b =>
+                {
+                    b.Property<int>("Id_Usuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Usuario"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("DUI")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDoctor")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id_Usuario");
+
+                    b.HasIndex("DUI")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id_Usuario = 1,
+                            Apellido = "Martínez",
+                            DUI = "10000000-1",
+                            Email = "carlos.martinez@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Carlos",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 2,
+                            Apellido = "Fernández",
+                            DUI = "10000001-2",
+                            Email = "lucia.fernandez@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Lucía",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 3,
+                            Apellido = "Rivas",
+                            DUI = "10000002-3",
+                            Email = "elena.rivas@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Elena",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 4,
+                            Apellido = "Orellana",
+                            DUI = "10000003-4",
+                            Email = "samuel.orellana@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Samuel",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 5,
+                            Apellido = "Zelaya",
+                            DUI = "10000004-5",
+                            Email = "beatriz.zelaya@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Beatriz",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 6,
+                            Apellido = "Arias",
+                            DUI = "10000005-6",
+                            Email = "patricia.arias@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Patricia",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 7,
+                            Apellido = "Méndez",
+                            DUI = "10000006-7",
+                            Email = "gustavo.mendez@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Gustavo",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        },
+                        new
+                        {
+                            Id_Usuario = 8,
+                            Apellido = "Valle",
+                            DUI = "10000007-8",
+                            Email = "ricardo.valle@clinica.com",
+                            IsDoctor = true,
+                            Nombre = "Ricardo",
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
+                        });
+                });
+
+            modelBuilder.Entity("Entidades.Citas", b =>
+                {
+                    b.HasOne("Entidades.Usuarios", "Paciente")
+                        .WithMany("CitasPaciente")
+                        .HasForeignKey("Id_Paciente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Entidades.Doctor", "Doctor")
+                        .WithMany("CitasRegistradas")
+                        .HasForeignKey("Id_doctor")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("Entidades.Doctor", b =>
                 {
                     b.HasOne("Entidades.Especialidad", "Especialidad")
-                        .WithMany("Doctors")
+                        .WithMany("Doctores")
                         .HasForeignKey("Id_Especialidad")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entidades.Usuarios", "usuario")
+                        .WithMany()
+                        .HasForeignKey("Id_Usuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Especialidad");
+
+                    b.Navigation("usuario");
+                });
+
+            modelBuilder.Entity("Entidades.Doctor", b =>
+                {
+                    b.Navigation("CitasRegistradas");
                 });
 
             modelBuilder.Entity("Entidades.Especialidad", b =>
                 {
-                    b.Navigation("Doctors");
+                    b.Navigation("Doctores");
+                });
+
+            modelBuilder.Entity("Entidades.Usuarios", b =>
+                {
+                    b.Navigation("CitasPaciente");
                 });
 #pragma warning restore 612, 618
         }

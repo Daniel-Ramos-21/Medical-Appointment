@@ -18,22 +18,15 @@ namespace Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Doctor { get; set; }
 
-        //Dato es not null
-        [Required]
-        //Establece la cantidad de caracteres del campo
-        [StringLength(50)]
-        public string Nombre { get; set; }
+        public int Id_Usuario { get; set; }
 
-        //Dato es not null
-        [Required]
-        //Establece la cantidad de caracteres del campo
-        [StringLength(60)]
-        public string Apellido { get; set; }
+        [ForeignKey("Id_Usuario")]
+        public virtual Usuarios usuario { get; set; } = null!;
 
         [Required]
         [StringLength(100)]
         //Datos del estudios del doctor
-        public string AlmaMater { get; set; }
+        public string AlmaMater { get; set; } = null!;
 
         [Required]
         //Hora de entrada del doctor
@@ -48,13 +41,15 @@ namespace Entidades
 
         //llave foreanea de la tabla y hace referencia a la tabla especialidad
         [ForeignKey("Id_Especialidad")]
-        public virtual Especialidad Especialidad { get; set; }
+        public virtual Especialidad Especialidad { get; set; } = null!;
 
         [StringLength(200)]
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
 
         [Display(Name = "Perfil Profesional")]
         [StringLength(500)]
-        public string Perfil { get; set; }
+        public string? Perfil { get; set; } = null!;
+
+        public virtual ICollection<Citas> CitasRegistradas { get; set; } = new List<Citas>();
     }
 }

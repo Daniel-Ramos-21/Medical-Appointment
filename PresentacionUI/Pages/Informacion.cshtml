@@ -1,4 +1,6 @@
 ﻿@page "{id:int}" 
+@* se envia por la barra de navegacion un dato de tipo entero que recibira el metodo por parametro para saber que id doctor
+utilizara *@
 @model PresentacionUI.Pages.InformacionModel
 @{
     
@@ -8,6 +10,7 @@
         <div class="row g-0 align-items-start">
             
             <div class="col-md-5">
+                <!--Se llama a los datos de la tabla doctor-->
                 <img src="@Model.Doctores.Foto" 
                      class="img-fluid rounded-start" 
                      alt="Foto de doctor"
@@ -21,7 +24,7 @@
                     </h5>
                     
                     <h1 class="display-6 fw-bold text-dark">
-                        Dr. @Model.Doctores.Nombre @Model.Doctores.Apellido
+                        Dr. @Model.Doctores.usuario.Nombre @Model.Doctores.usuario.Apellido
                     </h1>
                     <hr class="my-4" style="width: 50px; border: 2px solid #0d6efd; opacity: 1;">
                     <span class="text-black fw-bold" style="letter-spacing: 1px;">
