@@ -3,94 +3,151 @@
 @{
     ViewData["Title"] = "Agendar Cita Medica";
 }
-<h1>Agendar Nueva Cita</h1>
-@if (!string.IsNullOrEmpty(Model.MensajeError))
-{
-    <div class="alert alert-danger">@Model.MensajeError</div>
-}
 
-<form method="post">
-    <div class="form-group mb-3">
-        <label>DUI del Paciente:</label>
-        <input asp-for="dui" id="txtdui" class="form-control" placeholder="00000000-0" required />
-    </div>
-    
-    <div class="form-group mb-3">
-        <label>Nombre del Paciente: </label>
-        <input asp-for="NombrePaciente" type="text" id="txtnombre"  class="form-control" readonly placeholder="Se llena automaticamente" />
-    </div>
+<div class="container mt-4" style="max-width: 650px;">
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger fw-bold">@Model.MensajeError</div>
+    }
+    <div class="card shadow-sm mt-3">
+        @if (!Model.MostrarPasoHoras)
+        {
+            <div class="card-header bg-primary text-white py-3">
+                <h1 class="m-0 fw-bold">Agendar Nueva Cita</h1>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" asp-page-handler="Continuar">
+                    
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">DUI del Paciente:</label>
+                        <input asp-for="dui" id="txtdui" class="form-control" placeholder="00000000-0" required />
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">Nombre del Paciente: </label>
+                        <input asp-for="NombrePaciente" type="text" id="txtnombre" class="form-control" readonly placeholder="Se llena automaticamente" />
+                    </div>
 
-    <div class="form-group mb-3">
-        <label>Apellido del Paciente: </label>
-        <input asp-for="ApellidoPaciente" type="text" id="txtapellido" class="form-control" readonly placeholder="Se llena automaticamente" />
-    </div>
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">Apellido del Paciente: </label>
+                        <input asp-for="ApellidoPaciente" type="text" id="txtapellido" class="form-control" readonly placeholder="Se llena automaticamente" />
+                    </div>
 
-    <div class="form-group mb-3">
-        <label>ID del Doctor:</label>
-        <select asp-for="id_doctor" id="selectdoctor"  class="form-control" required >
-            <option value="">Seleccione un Doctor</option>
-            @foreach (var doctor in Model.Especialidades)
-            {
-                <option value="@doctor.Id_Especialidad">@doctor.Nombre_especialidad</option>
-            }
-         </select>
-    </div>
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">Especialidad (Selección de Base de Datos):</label>
+                        <select asp-for="id_doctor" id="selectdoctor" class="form-control" required>
+                            <option value="">Seleccione una Especialidad</option>
+                            @foreach (var especialidad in Model.Especialidades)
+                            {
+                                <option value="@especialidad.Id_Especialidad">@especialidad.Nombre_especialidad</option>
+                            }
+                        </select>
+                    </div>
 
-    <div class="form-group mb-3">
-        <label>Fecha de la Cita:</label>
-        <input asp-for="fecha" type="date" class="form-control" required />
-    </div>
+                    <div class="form-group mb-3">
+                        <label class="fw-bold">Fecha de la Cita:</label>
+                        <input asp-for="fecha" type="date" class="form-control" required min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    </div>
 
-    <div class="form-group mb-3">
-        <label>Hora de la Cita:</label>
-        <input asp-for="hora" type="time" class="form-control" required />
-    </div>
+                    <div class="form-group mb-4">
+                        <label class="fw-bold">Motivo de la Consulta:</label>
+                        <textarea asp-for="motivo" class="form-control" rows="3" required></textarea>
+                    </div>
 
-    <div class="form-group mb-3">
-        <label>Motivo de la Consulta:</label>
-        <textarea asp-for="motivo" class="form-control" rows="3" required></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Registrar Cita</button>
-</form>
-<script>
-        //escuche el evento change usuario escribe un DUI
-        document.getElementById("txtdui").addEventListener("change", async function () {
-        // Obtiene el DUI
-        const duiIngresado = this.value.trim();
-        //Obtiene las referencias a los inputs del form
-        const inputNombre = document.getElementById("txtnombre");
-        const inputApellido = document.getElementById("txtapellido");
-
-        // Si el campo está vacío, limpiamos los inputs de nombres
-        if (duiIngresado === "") {
-            inputNombre.value = "";
-            inputApellido.value = "";
-            return;
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary px-4 fw-bold">
+                            Continuar <i class="bi bi-arrow-right-short"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         }
+        else
+        {
+            <div class="card-header bg-success text-white py-3">
+                <h5 class="m-0 fw-bold">Seleccione la Hora de Atención</h5>
+                <small>Horarios disponible para el día: @Model.fecha.ToString("dd/MM/yyyy")</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" asp-page-handler="">
+                    
+                    <input type="hidden" asp-for="dui" />
+                    <input type="hidden" asp-for="NombrePaciente" />
+                    <input type="hidden" asp-for="ApellidoPaciente" />
+                    <input type="hidden" asp-for="id_doctor" />
+                    <input type="hidden" asp-for="fecha" />
+                    <input type="hidden" asp-for="motivo" />
 
-        try {
-            // Hacemos la petición al handler al metodo Paciente pasando el DUI como parámetro
-            const respuesta = await fetch(`?handler=Paciente&dui=${encodeURIComponent(duiIngresado)}`);
-            //Convertimos los datos del objeto en formato json
-            const datos = await respuesta.json();
+                    <div class="row row-cols-2 row-cols-sm-3 g-3 mb-4">
+                        @foreach (var item in Model.HorasDisponibles)
+                        {
+                            <div class="col">
+                                @if (item.Disponible)
+                                {
+                                    <input type="radio" class="btn-check" name="hora" id="h-@item.HoraBloque.ToString("hhmm")" value="@item.HoraBloque" required />
+                                    <label class="btn btn-outline-primary w-100 py-2 fw-bold text-uppercase rounded-pill shadow-sm" for="h-@item.HoraBloque.ToString("hhmm")">
+                                        Disponible @item.HoraBloque.ToString(@"hh\:mm")
+                                    </label>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-secondary w-100 py-2 fw-bold text-uppercase rounded-pill opacity-50" disabled>
+                                        Cupo Lleno @item.HoraBloque.ToString(@"hh\:mm")
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </div>
 
-            if (datos.encontrado) {
-                // Asignamos los valores devueltos a los inputs correspondientes
-                inputNombre.value = datos.nombre;
-                inputApellido.value = datos.apellido;
-            
-               
-            } else {
-                // Si el paciente no existe, limpiamos y alertamos visualmente
+                    <hr />
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="" class="text-decoration-none fw-bold text-muted">
+                            <i class="bi bi-chevron-left"></i> Modificar datos
+                        </a>
+                        
+                        <button type="submit" class="btn btn-success px-4 fw-bold shadow-sm">
+                             Registrar Cita
+                        </button>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    // Tu Script AJAX original para buscar por DUI (Se mantiene intacto)
+    const txtDuiInput = document.getElementById("txtdui");
+    if (txtDuiInput) {
+        txtDuiInput.addEventListener("change", async function () {
+            const duiIngresado = this.value.trim();
+            const inputNombre = document.getElementById("txtnombre");
+            const inputApellido = document.getElementById("txtapellido");
+
+            if (duiIngresado === "") {
                 inputNombre.value = "";
                 inputApellido.value = "";
-                inputNombre.classList.add("is-invalid");
-                alert("El DUI ingresado no pertenece a ningún paciente registrado.");
+                return;
             }
-        } catch (error) {
-            console.error("Error al buscar el paciente:", error);
-        }
-    });
+
+            try {
+                const respuesta = await fetch(`?handler=Paciente&dui=${encodeURIComponent(duiIngresado)}`);
+                const datos = await respuesta.json();
+
+                if (datos.encontrado) {
+                    inputNombre.value = datos.nombre;
+                    inputApellido.value = datos.apellido;
+                    inputNombre.classList.remove("is-invalid");
+                } else {
+                    inputNombre.value = "";
+                    inputApellido.value = "";
+                    inputNombre.classList.add("is-invalid");
+                    alert("El DUI ingresado no pertenece a ningún paciente registrado.");
+                }
+            } catch (error) {
+                console.error("Error al buscar el paciente:", error);
+            }
+        });
+    }
 </script>
-                                                                               

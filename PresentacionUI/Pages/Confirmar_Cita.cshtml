@@ -1,0 +1,30 @@
+﻿@page
+@model PresentacionUI.Pages.Confirmar_CitaModel
+@{
+   
+}
+<div class="container mt-4">
+    <div class="card max-auto" style="max-width :500px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Tu cita esta lista</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>ID de Cita: </strong>@Model.CitaReciente.Id_Citas</p>
+            <p><strong>Nombre del Paciente: </strong>@Model.CitaReciente.Paciente.Nombre</p>
+            <p><strong>Nombre del Doctor: </strong>Dr.  @Model.CitaReciente.Doctor.usuario.Nombre</p>
+            <p><strong>Especialidad: </strong>#@Model.CitaReciente.Doctor.Especialidad.Nombre_especialidad</p>
+            <p><strong>Fecha: </strong>@Model.CitaReciente.Fecha.ToString("dd/MM/yyyy")</p>
+            <p><strong>ID de Cita: </strong>@Model.CitaReciente.Hora</p>
+
+            <div class="d-grid gap-2 mt-4">
+                <a asp-page-handler="DescargarImagen" class="btn btn-success">
+                    Descargar Cita en Imagen(PNG)
+                </a>
+                <a asp-page="./Index" class="btn btn-outline-secondary">Regresar</a>
+            </div>
+        </div>
+        <div class="card-footer bg-transparent text-center py-3 text-muted small border-0">
+            Por favor, presenta este comprobante el día de tu consulta.
+        </div>
+    </div>
+</div>

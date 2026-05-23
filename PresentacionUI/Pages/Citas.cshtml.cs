@@ -15,6 +15,7 @@ namespace PresentacionUI.Pages
     {
         //Variable privada que nos sirve solo de lectura de la clase citaBLL
         private readonly CitaBLL _citaBLL;
+        
 
         //Inyeccion de dependencias por constructor
         public CitasModel(CitaBLL citaBLL)
@@ -48,6 +49,10 @@ namespace PresentacionUI.Pages
         public string MensajeError { get; set; } = string.Empty;
 
         public List<Especialidad> Especialidades { get; set; } //LLama la lista de datos de la tabla entidades
+
+        public List<BloqueHoraDto> HorasDisponibles { get; set; } = new List<BloqueHoraDto>();
+
+        public bool MostrarPasoHoras { get; set; } = false;
 
         public void OnGet()
         {
@@ -89,50 +94,109 @@ namespace PresentacionUI.Pages
             return new JsonResult(doctores);
         }
 
+        public IActionResult OnPostContinuar()
+        {
+            ModelState.Remove("hora");
+            if (!ModelState.IsValid)
+            {
+                Especialidades = _citaBLL.ObtenerEspecialidades();
+                MensajeError = "Por favor, rellene todos los campos";
+                return Page();
+            }
+            try
+            {
+                var doctor = _citaBLL.ObtenerDoctorPorID(id_doctor);
+                if (doctor == null)
+                {
+                    MensajeError = "El doctor seleccionado no existe";
+                    Especialidades = _citaBLL.ObtenerEspecialidades();
+                    return Page();
+                }
+                TimeSpan horaInicio = doctor.HoraEntrada;
+                TimeSpan horaFin = doctor.HoraSalida;
+
+                TimeSpan InicioAlmuerzo = new TimeSpan(12, 0, 0);
+                TimeSpan FinAlmuerzo = new TimeSpan(13, 0, 0);
+
+                List<TimeSpan> HorasOcupadas = _citaBLL.ObtenerHorasOcupadasPorFecha(id_doctor, fecha);
+                TimeSpan horaAuxiliar = horaInicio;
+                while (horaAuxiliar < horaFin)
+                {
+                    if (horaAuxiliar >= InicioAlmuerzo && horaAuxiliar < FinAlmuerzo)
+                    {
+                        horaAuxiliar = FinAlmuerzo;
+                        continue;
+                    }
+                
+                bool Ocupado = HorasOcupadas.Contains(horaAuxiliar);
+
+                HorasDisponibles.Add(new BloqueHoraDto
+                {
+                    HoraBloque = horaAuxiliar,
+                    Disponible = !Ocupado
+                });
+                horaAuxiliar = horaAuxiliar.Add(TimeSpan.FromMinutes(15));
+
+            }
+            MostrarPasoHoras = true;
+        }
+            catch(Exception ex)
+            {
+                MensajeError = "Error al calcular horario";
+            }
+            Especialidades = _citaBLL.ObtenerEspecialidades();
+            return Page();
+        }
+
+
+
         //metodo asicrono que nos permitira insertar los datos y traer toda la logica de negocio
         //Y con IActionResult nos retornara a otra parte de la pagina 
         public async Task<IActionResult> OnPostAsync()
         {
-            //Condicion que evaluara la reglas de validacion de la entidades 
+            if (hora == TimeSpan.Zero)
+            {
+                MensajeError = "Debe selecionar una hora disponible para su cita";
+                OnPostContinuar();
+                return Page();
+            }
             if (!ModelState.IsValid)
             {
-                //Retornamos la lista de especialidades para que este lista cuando se ingrese a la pagina 
-                Especialidades = _citaBLL.ObtenerEspecialidades(); 
-                //Mensaje de error de nuestro atributo
-                MensajeError = "Por favor, rellene todos los campos correctamente.";
-                //Nos retorna a la misma pagina 
+                Especialidades = _citaBLL.ObtenerEspecialidades();
+                MensajeError = "Por favor, rellene todos los campos";
                 return Page();
             }
 
+
             try
             {
-                //Declaracion de variable booleana que obtendra el metodo para registrar una cita y validad si la cita se registro
-                bool resultado = await _citaBLL.RegistrarCitas(dui, id_doctor, fecha, hora, motivo);
-
-                //Condicion si resultado obtine los datos ingresados 
-                if (resultado)
+                bool CitaGuardada = await _citaBLL.RegistrarCitas(dui, id_doctor, fecha, hora, motivo);
+                if (CitaGuardada)
                 {
-                    //Mensaje de datos ingresados con exito
-                    MensajeExito = "¡La cita se ha registrado exitosamente!";
-                    Especialidades = _citaBLL.ObtenerEspecialidades(); 
-                    //Retornamos a la pagina de index
-                    return RedirectToPage("/Index");
+                    int IdCita = _citaBLL.ObtenerCitas(id_doctor, fecha, hora);
+
+                    if(IdCita > 0)
+                    {
+                        TempData["CitaReciente"] = IdCita;
+                        return RedirectToPage("./Confirmar_Cita");
+                    }
                 }
             }
             catch (ArgumentException ex)
             {
                 // Aquí atrapamos la excepciones CitaBLL
                 MensajeError = ex.Message;
+                OnPostContinuar();
             }
             catch (Exception ex)
             {
                 // Aqui estarian otras execepciones que no son del CitaBLL
                 MensajeError = "Ocurrió un error inesperado en el sistema: " + ex.Message;
+                OnPostContinuar();
             }
-
             Especialidades = _citaBLL.ObtenerEspecialidades();
             return Page();
-        }
 
+        }
     }
 }
