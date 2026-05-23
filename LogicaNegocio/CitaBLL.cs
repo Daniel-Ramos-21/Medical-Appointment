@@ -86,12 +86,24 @@ namespace LogicaNegocio
                 .AsNoTracking()
                 .FirstOrDefault(u => u.DUI == dui);
         }
+
+        public Doctor? ObtenerDoctorPorID(int ID_Doctor)
+        {
+            return _context.Doctors.Find(ID_Doctor);
+                
+        }
+
         public async Task<bool> RegistrarCitas(string dui, int doctor, DateOnly Fecha, TimeSpan Hora, string motivo)
         {
            
             if (Fecha.DayOfWeek == DayOfWeek.Saturday || Fecha.DayOfWeek == DayOfWeek.Sunday)
             {
                 throw new ArgumentException("Los días Sábados y Domingos los doctores no están disponibles.");
+            }
+
+            if (Fecha <= DateOnly.FromDateTime(DateTime.Now))
+            {
+                throw new ArgumentException("No se pueden registrar citas en el pasado");
             }
 
             if (await ESDiaFeriado(Fecha))
@@ -132,6 +144,47 @@ namespace LogicaNegocio
             await _context.SaveChangesAsync(); 
 
             return true;
+        }
+
+        public List<TimeSpan> ObtenerHorasOcupadasPorFecha(int ID_Doctor, DateOnly Fecha_Cita)
+        {
+            try
+            {
+                return _context.Citas
+                    .Where(c => c.Id_doctor == ID_Doctor && c.Fecha == Fecha_Cita)
+                    .Select(c => c.Hora)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al consultar las fechas ocupadas");
+            }
+        }
+
+        public int ObtenerCitas(int idDoctor, DateOnly fechaCita, TimeSpan HoraCita)
+        {
+            try
+            {
+                var cita = _context.Citas
+                    .FirstOrDefault(c => c.Id_doctor == idDoctor && c.Fecha == fechaCita && c.Hora == HoraCita);
+                return cita != null ? cita.Id_Citas : 0;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Error al recuperar el Id de la cita : " + ex.Message);
+            }
+        }
+
+        public Citas? ObtenerCitasID(int id)
+        {
+            return _context.Citas
+                .AsTracking()
+                .Include(c => c.Paciente)
+                .Include(c => c.Doctor)
+                .ThenInclude(d => d.usuario)
+                .Include(c => c.Doctor)
+                .ThenInclude(d => d.Especialidad)
+                .FirstOrDefault(c => c.Id_Citas == id);
         }
 
     }
