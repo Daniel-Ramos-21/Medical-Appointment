@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="fw-bold">Especialidad (Selección de Base de Datos):</label>
+                        <label class="fw-bold">Especialidad:</label>
                         <select asp-for="id_doctor" id="selectdoctor" class="form-control" required>
                             <option value="">Seleccione una Especialidad</option>
                             @foreach (var especialidad in Model.Especialidades)
@@ -117,7 +117,7 @@
 </div>
 
 <script>
-    // Tu Script AJAX original para buscar por DUI (Se mantiene intacto)
+    
     const txtDuiInput = document.getElementById("txtdui");
     if (txtDuiInput) {
         txtDuiInput.addEventListener("change", async function () {
