@@ -56,6 +56,7 @@ namespace PresentacionUI.Pages
                 using (var bitmap = new SKBitmap(width, height))
                 using (var canvas = new SKCanvas(bitmap))
                 {
+                   
                     canvas.Clear(SKColors.WhiteSmoke);
 
                     using var typefaceBold = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
@@ -66,15 +67,23 @@ namespace PresentacionUI.Pages
                     using var paintTextoColor = new SKPaint { Color = SKColors.Black, IsAntialias = true };
                     using var paintBarra = new SKPaint { Color = SKColors.Navy };
 
-                    canvas.DrawRect(new SKRect(0, 0, width, 15), paintBarra);
-
-                    canvas.DrawText("DETALLE DE LA CITA MÉDICA", 40, 60, SKTextAlign.Left, fontTitulo, paintTituloColor);
-
-                    canvas.DrawText($"Paciente: {(cita.Paciente.Nombre)}", 40, 120, SKTextAlign.Left, fontTexto, paintTextoColor);
-                    canvas.DrawText($"Médico: {(cita.Doctor.usuario.Nombre)}", 40, 160, SKTextAlign.Left, fontTexto, paintTextoColor);
+                    canvas.DrawText("DETALLES DE LA CITA MÉDICA", 40, 60, SKTextAlign.Left, fontTitulo, paintTituloColor);
+                    canvas.DrawText($"Paciente: {cita.Paciente.Nombre} {cita.Paciente.Apellido}", 40, 120, SKTextAlign.Left, fontTexto, paintTextoColor);
+                    canvas.DrawText($"Médico: Dr.{cita.Doctor.usuario.Nombre} {cita.Doctor.usuario.Apellido}", 40, 160, SKTextAlign.Left, fontTexto, paintTextoColor);
                     canvas.DrawText($"Especialidad: {(cita.Doctor.Especialidad.Nombre_especialidad)}", 40, 200, SKTextAlign.Left, fontTexto, paintTextoColor);
                     canvas.DrawText($"Fecha: {cita.Fecha:dd/MM/yyyy} - {cita.Hora}", 40, 240, SKTextAlign.Left, fontTexto, paintTextoColor);
                     canvas.DrawText($"Motivo: {cita.Motivo}", 40, 280, SKTextAlign.Left, fontTexto, paintTextoColor);
+                    using (var logo = System.IO.File.OpenRead("wwwroot\\img\\Logo\\logo.png"))
+                    {
+                        using (var bitmaplogo = SKBitmap.Decode(logo))
+                        {
+                            var tamaño = new SKRect(450, 40, 550, 130);
+                            canvas.DrawBitmap(bitmaplogo, tamaño);
+                        }
+                    }
+
+
+                    canvas.Flush();
 
                     using (var image = SKImage.FromBitmap(bitmap))
                     using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
