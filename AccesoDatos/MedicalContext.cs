@@ -60,12 +60,12 @@ namespace AccesoDatos
                 new List<Especialidad>
                 {
                     // Se definen los registros iniciales que se insertarán en la base de datos.
-                    new Especialidad { Id_Especialidad = 1, Nombre_especialidad = "Medicina General"},
-                    new Especialidad { Id_Especialidad = 2, Nombre_especialidad = "Odontología"},
-                    new Especialidad { Id_Especialidad = 3, Nombre_especialidad = "Pediatría"},
-                    new Especialidad { Id_Especialidad = 4, Nombre_especialidad = "Ginecología"},
-                    new Especialidad { Id_Especialidad = 5, Nombre_especialidad = "Psicología"},
-                    new Especialidad { Id_Especialidad = 6, Nombre_especialidad = "Oftalmología"}
+                    new Especialidad { Id_Especialidad = 1, Nombre_especialidad = "Medicina General", descripcion= "Consultas generales y chequeos médicos completos."},
+                    new Especialidad { Id_Especialidad = 2, Nombre_especialidad = "Odontología",descripcion="Cuidado dental, limpieza y salud bucal integral."},
+                    new Especialidad { Id_Especialidad = 3, Nombre_especialidad = "Pediatría", descripcion="Atención médica y control del desarrollo infantil"},
+                    new Especialidad { Id_Especialidad = 4, Nombre_especialidad = "Ginecología", descripcion= "Salud reproductiva femenina, control y embarazo."},
+                    new Especialidad { Id_Especialidad = 5, Nombre_especialidad = "Psicología", descripcion= "Terapia emocional, apoyo mental y bienestar integral."},
+                    new Especialidad { Id_Especialidad = 6, Nombre_especialidad = "Oftalmología", descripcion = "Exámenes de la vista y tratamiento de problemas oculares."}
                 }
                 );
 

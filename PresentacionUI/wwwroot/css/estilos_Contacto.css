@@ -1,0 +1,26 @@
+﻿.contacto {
+    min-height: 50vh;
+    background-image: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url('../img/Index/contacto_fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.contacto-card {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.1);
+}
+
+.contacto-info {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.1);
+    height: 100%;
+}
+
+.form-control {
+    border-radius: 10px;
+}

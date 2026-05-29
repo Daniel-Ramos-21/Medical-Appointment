@@ -36,6 +36,13 @@ namespace LogicaNegocio
             .ToList();
         }
 
+        public List<Especialidad> ObtenerEspecialidades()
+        {
+            return _context.Doctors
+                .Select(e => e.Especialidad)
+                .ToList();
+        }
+
         //Un metodo publico que obtine la entidad Doctor y que por parametro reciba un dato,
         //tipo entero que representara nuestro id
         public Doctor ObtenerInforID(int id)

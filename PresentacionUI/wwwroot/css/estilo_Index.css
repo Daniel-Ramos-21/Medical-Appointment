@@ -1,0 +1,72 @@
+﻿.Principal {
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url('../img/Index/panel_index.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.parallax-section {
+    height: 60vh;
+    background-image: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)), url('../img/Index/parallax_fondo.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.service-card {
+    transition: .3s;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+.map-container {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.location-info {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.carrusel-contenedor {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    
+}
+
+.carrusel-track {
+    display: flex;
+    gap: 1.5rem; 
+    width: max-content;
+    animation: moverHaciaDerecha 30s linear infinite;
+
+}
+
+.carrusel-item {
+    width: 350px;
+    flex-shrink: 0;
+    background-color: powderblue;
+    border: 1px solid black;
+}
+
+
+.carrusel-contenedor:hover .carrusel-track {
+    animation-play-state: paused;
+}
+
+@keyframes moverHaciaDerecha {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}

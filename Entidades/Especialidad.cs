@@ -25,5 +25,9 @@ namespace Entidades
         public string Nombre_especialidad { get; set; } = null!;
         //Indica que puede tener una relacion 1, N entre Especialidad y Medicos
         public virtual ICollection<Doctor> Doctores { get; set; } = new List<Doctor>();
+
+        [Required]
+        [StringLength(100)]
+        public string descripcion { get; set; } = null!;
     }
 }
