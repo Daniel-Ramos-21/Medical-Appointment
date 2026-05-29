@@ -10,41 +10,57 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Francisco Palau</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav class="navbar navbar-expand-md navbar-light bg-primary ">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold" asp-area="" asp-page="/Index">Francisco Palau</a>        
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto text-end"> 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-white fw-semibold" asp-area="" asp-page="/Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Doctores">Doctores</a>
+                            <a class="nav-link text-white fw-semibold" asp-area="" asp-page="/Doctores">Doctores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Citas">Cita</a>
+                            <a class="nav-link text-white fw-semibold" asp-area="" asp-page="/Citas">Cita</a>
                         </li>
-                        <li class= "nav-item">
-                            <a class= "nav-link text-dark" asp-area="" asp-page="/Contacto">Contacto</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" asp-area="" asp-page="/Contacto">Contacto</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer-clinica">
         <div class="container">
-            &copy; 2026 - PresentacionUI - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-center py-4">
+                <div>
+                    <h5 class="mb-1 fw-bold">
+                        Clínica Francisco Palau.
+                    </h5>
+                    <small>
+                        Cuidando tu salud y bienestar.
+                    </small>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center pb-3">
+                <small>
+                    © 2026 Clínica Francisco Palau. Todos los derechos reservados.
+                </small>
+            </div>
         </div>
     </footer>
 

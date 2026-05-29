@@ -1,5 +1,173 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" href="~/css/estilo_Index.css" asp-append-version="true" />
+<section class="Principal d-flex align-items-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-white">
+                <h1 class="display-2 fw-bold">
+                    Tu salud es nuestra prioridad
+                </h1>
+                <p class="lead mt-5">
+                    Atención médica moderna con especialistas capacitados.
+                </p>
+                <a class="btn btn-primary btn-lg mt-3 px-5" asp-page="/Citas">
+                    Reservar Cita
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Especialidades-->
+<section class="py-5 bg-white overflow-hidden">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">
+                Nuestros Servicios
+            </h2>
+            <p class="text-muted">
+                Atención médica profesional.
+            </p>
+        </div>
+        <div class="carrusel-contenedor">
+            <div class="carrusel-track">
+                
+                @foreach (var especialidad in Model.Especialidades)
+                {
+                    <div class="carrusel-item">
+                        <div class="card border-0 shadow h-100 service-card">
+                            <div class="card-body text-center p-5">
+                                <h4 class="text-primary mb-3">
+                                    @especialidad.Nombre_especialidad
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    @especialidad.descripcion
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @foreach (var especialidad in Model.Especialidades)
+                {
+                    <div class="carrusel-item" aria-hidden="true">
+                        <div class="card border-0 shadow h-100 service-card">
+                            <div class="card-body text-center p-5">
+                                <h4 class="text-primary mb-3">
+                                    @especialidad.Nombre_especialidad
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    @especialidad.descripcion
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="parallax-section d-flex align-items-center">
+    <div class="container text-center text-white">
+        <h2 class="display-4 fw-bold">
+            Más de 10 años cuidando pacientes
+        </h2>
+        <p class="lead mt-4">
+            Tecnología moderna y atención humana.
+        </p>
+    </div>
+</section>
+
+<!--Doctores-->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-5">
+                <div class="p-5 bg-light rounded-4 shadow-sm h-100 border-start border-primary border-4">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-bullseye fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 text-dark">Nuestra Misión</h3>
+                    <p class="text-muted lh-base">
+                        Brindar atención médica integral y de alta calidad, garantizando el bienestar de nuestros pacientes a través de un equipo de especialistas comprometidos con la excelencia, la ética profesional y un trato humano y cálido.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="p-5 bg-light rounded-4 shadow-sm h-100 border-start border-primary border-4">
+                    <div class="mb-3 text-primary">
+                        <i class="bi bi-bulleye fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 text-dark">Nuestra Visión</h3>
+                    <p class="text-muted lh-base">
+                        Ser reconocidos como el centro médico líder en innovación y cuidado de la salud en nuestra región, distinguiéndonos por la seguridad de nuestros tratamientos, la calidez en el servicio y la confianza de nuestras familias.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <hr class="text-muted opacity-25 my-0">
+</div>
+
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">
+                Nuestra Ubicación
+            </h2>
+            <p class="text-muted">
+                Estamos disponibles para atenderte.
+            </p>
+        </div>
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="location-info bg-white p-5 rounded-4 shadow-sm border">
+                    <h4 class="fw-bold mb-4 text-primary">
+                        Clínica Francisco Palau
+                    </h4>
+                    <p class="mb-3">
+                        📍 Clínica "Francisco Palau", Chalatenango, La Laguna
+                    </p>
+                    <p class="mb-3">
+                        📞 +503 7167-2222
+                    </p>
+                    <p class="mb-3">
+                        ✉ franciscoPalau@gmail.com
+                    </p>
+                    <p class="mb-4">
+                        🕒 Lunes a Viernes:<br>
+                        <span class="text-muted ps-4">7:00 AM - 8:00 PM</span>
+                    </p>
+
+                    <a href="https://maps.app.goo.gl/G9V1S4wEv51Pi2R48"
+                       target="_blank"
+                       class="btn btn-primary w-100 py-2 fw-bold">
+                        Ver en Google Maps
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="map-container shadow rounded-4 overflow-hidden">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d655465.4434339951!2d-89.3740790959504!3d14.20226129797116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6371aedaf26d07%3A0xe27a7d786ba360da!2sClinica%20%22Francisco%20Palau%22!5e0!3m2!1ses!2ssv!4v1780011223630!5m2!1ses!2ssv"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
