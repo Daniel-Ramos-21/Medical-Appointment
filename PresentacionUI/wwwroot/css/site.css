@@ -31,24 +31,34 @@ main {
 @media (max-width: 767.98px) {
 
     .navbar-collapse {
-        background-color: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background-color: #0f172a;
+        width: 100%;
+        margin-top: 0;
         padding: 1rem;
-        border-radius: 12px;
-        margin-top: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
     }
 
         .navbar-collapse .nav-link {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            color: white !important;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            text-align: center;
         }
 
         .navbar-collapse .nav-item:last-child .nav-link {
             border-bottom: none;
         }
+
+    .navbar-toggler {
+        border-color: white;
+        
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1);
+    }
 }
 
 .navbar .nav-link {

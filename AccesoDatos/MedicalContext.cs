@@ -69,7 +69,7 @@ namespace AccesoDatos
                 }
                 );
 
-            string passwordHas = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG";
+            string passwordHas = "Admin123";
             //Configuracion de la (Seed Data) para la  tabla usuarios
             modelBuilder.Entity<Usuarios>().HasData(
                 new List<Usuarios>
