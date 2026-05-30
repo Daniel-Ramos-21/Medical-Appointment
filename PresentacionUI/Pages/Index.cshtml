@@ -14,9 +14,21 @@
                 <p class="lead mt-5">
                     Atención médica moderna con especialistas capacitados.
                 </p>
-                <a class="btn btn-primary btn-lg mt-3 px-5" asp-page="/Citas">
-                    Reservar Cita
-                </a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    @if (User.IsInRole("Paciente"))
+                    {
+                        <a class="btn btn-primary btn-lg mt-3 px-5" asp-page="/Citas">
+                            Reservar Cita
+                        </a>
+                    }
+                    @if (User.IsInRole("Medico"))
+                    {
+                        <a class="btn btn-primary btn-lg mt-3 px-5" asp-page="/Doctor_cita/Doctor_Citas">
+                            Lista de cita
+                        </a>
+                    }
+                }
             </div>
         </div>
     </div>

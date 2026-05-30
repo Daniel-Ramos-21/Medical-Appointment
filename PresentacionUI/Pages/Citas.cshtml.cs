@@ -7,10 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AccesoDatos;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace PresentacionUI.Pages
 {
+    [Authorize]
     public class CitasModel : PageModel
     {
         //Variable privada que nos sirve solo de lectura de la clase citaBLL

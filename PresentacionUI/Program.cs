@@ -1,6 +1,8 @@
 using AccesoDatos;
 using LogicaNegocio;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +17,24 @@ builder.Services.AddDbContext<MedicalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("conexion"))
 );
 builder.Services.AddHttpClient<CitaBLL>();
+builder.Services.AddScoped<HistorialBLL>();
 builder.Services.AddScoped<DoctoresBLL>();
+builder.Services.AddScoped<ListaCitas>();
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
 
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.SlidingExpiration = true;
+    });
+
+builder.Services.AddAuthorization();
 //Genaera la configucion de la aplicacion
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,6 +64,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
