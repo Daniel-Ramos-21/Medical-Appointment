@@ -4,6 +4,7 @@ using AccesoDatos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    partial class MedicalContextModelSnapshot : ModelSnapshot
+    [Migration("20260528201007_Campo-de-descripcion")]
+    partial class Campodedescripcion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,7 +317,7 @@ namespace AccesoDatos.Migrations
                             Email = "carlos.martinez@clinica.com",
                             IsDoctor = true,
                             Nombre = "Carlos",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -324,7 +327,7 @@ namespace AccesoDatos.Migrations
                             Email = "lucia.fernandez@clinica.com",
                             IsDoctor = true,
                             Nombre = "Lucía",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -334,7 +337,7 @@ namespace AccesoDatos.Migrations
                             Email = "elena.rivas@clinica.com",
                             IsDoctor = true,
                             Nombre = "Elena",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -344,7 +347,7 @@ namespace AccesoDatos.Migrations
                             Email = "samuel.orellana@clinica.com",
                             IsDoctor = true,
                             Nombre = "Samuel",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -354,7 +357,7 @@ namespace AccesoDatos.Migrations
                             Email = "beatriz.zelaya@clinica.com",
                             IsDoctor = true,
                             Nombre = "Beatriz",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -364,7 +367,7 @@ namespace AccesoDatos.Migrations
                             Email = "patricia.arias@clinica.com",
                             IsDoctor = true,
                             Nombre = "Patricia",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -374,7 +377,7 @@ namespace AccesoDatos.Migrations
                             Email = "gustavo.mendez@clinica.com",
                             IsDoctor = true,
                             Nombre = "Gustavo",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         },
                         new
                         {
@@ -384,7 +387,7 @@ namespace AccesoDatos.Migrations
                             Email = "ricardo.valle@clinica.com",
                             IsDoctor = true,
                             Nombre = "Ricardo",
-                            password = "Admin123"
+                            password = "$2a$12$cyyvGxCZnMpifroR0sUy4uvTZb5rh9ojoyD8jDozLjpXI9zGc5FBG"
                         });
                 });
 

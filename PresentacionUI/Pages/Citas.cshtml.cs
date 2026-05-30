@@ -7,10 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AccesoDatos;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace PresentacionUI.Pages
 {
+    [Authorize]
     public class CitasModel : PageModel
     {
         //Variable privada que nos sirve solo de lectura de la clase citaBLL
@@ -105,46 +107,68 @@ namespace PresentacionUI.Pages
             }
             try
             {
+                //Obtenemos los datos del doctor atravez de un metodo
                 var doctor = _citaBLL.ObtenerDoctorPorID(id_doctor);
+                //Si el doctor no existe mandamos un mensaje error
                 if (doctor == null)
                 {
                     MensajeError = "El doctor seleccionado no existe";
+                    //Recargamos las lista de especialidades del form
                     Especialidades = _citaBLL.ObtenerEspecialidades();
+                    //Recarga la pagina actual
                     return Page();
                 }
+                //asinamos 2 variables una tiene la hora de entrada del doctor
+                //y la otra la hora de salida
                 TimeSpan horaInicio = doctor.HoraEntrada;
                 TimeSpan horaFin = doctor.HoraSalida;
 
+                //En 2 variables definimos un rango estaticos para el horario de almuerzo
                 TimeSpan InicioAlmuerzo = new TimeSpan(12, 0, 0);
                 TimeSpan FinAlmuerzo = new TimeSpan(13, 0, 0);
 
+                //Trae la lista de horas que ta estan reservadas para el doctor junto a la fecha
+                //Por medio de un metodo
                 List<TimeSpan> HorasOcupadas = _citaBLL.ObtenerHorasOcupadasPorFecha(id_doctor, fecha);
+                //Inicializa la varible para obtenga la hora de entrada del doctor
                 TimeSpan horaAuxiliar = horaInicio;
+
+                //Con un bucle recorre la jornada del doctor
                 while (horaAuxiliar < horaFin)
                 {
+                    //Si la hora actual cae en la hora de almuerzo 
                     if (horaAuxiliar >= InicioAlmuerzo && horaAuxiliar < FinAlmuerzo)
                     {
+                        //salta el reloj directamente hasta el final del almuerzo
                         horaAuxiliar = FinAlmuerzo;
+                        //y pasamos a la siguiente interacion
                         continue;
                     }
-                
+                //verificamos que la hora actual se encuentra en la lista de las horas ocupadas
                 bool Ocupado = HorasOcupadas.Contains(horaAuxiliar);
 
+                //Agregamos el bloque de tiempo de a lista que mostraremos en la pagina
                 HorasDisponibles.Add(new BloqueHoraDto
                 {
-                    HoraBloque = horaAuxiliar,
-                    Disponible = !Ocupado
+                    HoraBloque = horaAuxiliar, //aqui guarda la hora actual
+                    Disponible = !Ocupado //Si esta ocupado o disponible sera false o true
                 });
+                //hacemos que la variable incremente en un intervalo de 15minutos para evaluar el siguiente bloque
                 horaAuxiliar = horaAuxiliar.Add(TimeSpan.FromMinutes(15));
 
             }
+                //Si el bucle termnina con exito mostrar horas sera true 
+                //entonces damos luz verde para mostrar la lista de horas
             MostrarPasoHoras = true;
         }
             catch(Exception ex)
             {
+                //Si algo falla mostraremos un mensaje de error
                 MensajeError = "Error al calcular horario";
             }
+            //Cargamos la lista de especialidades del form
             Especialidades = _citaBLL.ObtenerEspecialidades();
+            //Refresca la pagina con nuevos datos calculados
             return Page();
         }
 

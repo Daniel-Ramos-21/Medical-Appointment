@@ -1,62 +1,74 @@
+using Entidades;
 using LogicaNegocio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.Design;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using AccesoDatos;
-using System.IO;
 using SkiaSharp;
-using Entidades;
+using System.Security.Claims;
 
 namespace PresentacionUI.Pages
 {
-    public class Confirmar_CitaModel : PageModel
+    [Authorize]
+    public class HistorialPacienteModel : PageModel
     {
-        private readonly CitaBLL _citaBll;
+        private readonly HistorialBLL _historialbll;
 
-        public Confirmar_CitaModel(CitaBLL citaBLL)
+        public HistorialPacienteModel(HistorialBLL historialBLL)
         {
-            _citaBll = citaBLL;
+            _historialbll = historialBLL;
         }
 
-        public Citas CitaReciente { get; set; }
+        public List<Citas> Cita { get; set; }
+        public List<Especialidad> Especialidades { get; set; }
 
-        public IActionResult OnGet()
+        [BindProperty(SupportsGet = true)]
+        public DateOnly? FechaFiltro { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? EspecialidadFiltro { get; set; }
+
+        public void OnGet()
         {
-            if (TempData["CitaReciente"] is int id_Cita)
+            int idUsuario = int.Parse(
+                User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            Especialidades = _historialbll.ObtenerEspecialidades();
+
+            if (FechaFiltro.HasValue || EspecialidadFiltro.HasValue)
             {
-                TempData.Keep("CitaReciente");
-
-                CitaReciente = _citaBll.ObtenerCitasID(id_Cita);
-
-                if (CitaReciente == null)
-                {
-                    return RedirectToPage("./Index");
-                }
-                return Page();
+                Cita = _historialbll.FitroCitasPorFecha(
+                    idUsuario,
+                    FechaFiltro,
+                    EspecialidadFiltro
+                );
             }
-            return RedirectToPage("./Index");
+            else
+            {
+                Cita = _historialbll.HistorialCitas(idUsuario);
+            }
+        }
+        public async Task<IActionResult> OnPostEliminarAsync(int id)
+        {
+            await _historialbll.EliminarCita(id);
+
+            return RedirectToPage();
         }
 
-        public IActionResult OnGetDescargarImagen()
+        public IActionResult OnGetDescargarImagen(int id)
         {
-            if (TempData["CitaReciente"] is int id_cita)
-            {
-                TempData.Keep("CitaReciente");
-                var cita = _citaBll.ObtenerCitasID(id_cita);
-                if (cita == null)
-                {
-                    return NotFound();
-                }
+            var cita = _historialbll.ObtenerCitasID(id);
+
+            if (cita == null) {
+                return NotFound();
+            }
+            
 
                 int width = 600;
                 int height = 350;
                 using (var bitmap = new SKBitmap(width, height))
                 using (var canvas = new SKCanvas(bitmap))
                 {
-                   
+
                     canvas.Clear(SKColors.WhiteSmoke);
 
                     using var typefaceBold = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
@@ -89,12 +101,9 @@ namespace PresentacionUI.Pages
                     using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
                     {
                         var stream = new MemoryStream(data.ToArray());
-                        return File(stream, "image/png", $"Cita_{id_cita}.png");
+                        return File(stream, "image/png", $"Cita.png");
                     }
                 }
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

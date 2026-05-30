@@ -1,0 +1,64 @@
+﻿@page
+@model PresentacionUI.Pages.RegistrarseModel
+@{
+    ViewData["Title"] = "Registrase";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-3">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="mb-0">Formulario de Registro</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label asp-for="Input.Nombre" class="form-label fw-semibold">Nombre</label>
+                                <input asp-for="Input.Nombre" class="form-control" />
+                                <span asp-validation-for="Input.Nombre" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label asp-for="Input.Apellido" class="form-label fw-semibold">Apellido</label>
+                                <input asp-for="Input.Apellido" class="form-control" />
+                                <span asp-validation-for="Input.Apellido" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.DUI" class="form-label fw-semibold">DUI (El Salvador)</label>
+                            <input asp-for="Input.DUI" class="form-control" placeholder="00000000-0" />
+                            <span asp-validation-for="Input.DUI" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Email" class="form-label fw-semibold">Correo Electrónico</label>
+                            <input asp-for="Input.Email" type="email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label fw-semibold">Contraseña</label>
+                            <input asp-for="Input.Password" type="password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.ConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control" type="password" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2 rounded-2 fw-bold">Confirmar Registro</button>
+                    </form>
+                </div>
+                <div class="card-footer bg-light text-center py-3">
+                    <p class="mb-0 small text-muted">¿Ya posees credenciales? <a asp-page="/Account/Login" class="text-success fw-bold text-decoration-none">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

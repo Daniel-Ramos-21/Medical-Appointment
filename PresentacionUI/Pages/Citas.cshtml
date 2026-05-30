@@ -13,7 +13,7 @@
         @if (!Model.MostrarPasoHoras)
         {
             <div class="card-header bg-primary text-white py-3">
-                <h1 class="m-0 fw-bold">Agendar Nueva Cita</h1>
+                <h1 class="m-0 fw-bold text-center">Agendar Nueva Cita</h1>
             </div>
             <div class="card-body p-4">
                 <form method="post" asp-page-handler="Continuar">
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="fw-bold">Especialidad (Selección de Base de Datos):</label>
+                        <label class="fw-bold">Especialidad:</label>
                         <select asp-for="id_doctor" id="selectdoctor" class="form-control" required>
                             <option value="">Seleccione una Especialidad</option>
                             @foreach (var especialidad in Model.Especialidades)
@@ -64,7 +64,7 @@
         }
         else
         {
-            <div class="card-header bg-success text-white py-3">
+            <div class="card-header bg-success text-white py-3 text-center">
                 <h5 class="m-0 fw-bold">Seleccione la Hora de Atención</h5>
                 <small>Horarios disponible para el día: @Model.fecha.ToString("dd/MM/yyyy")</small>
             </div>
@@ -117,7 +117,7 @@
 </div>
 
 <script>
-    // Tu Script AJAX original para buscar por DUI (Se mantiene intacto)
+    
     const txtDuiInput = document.getElementById("txtdui");
     if (txtDuiInput) {
         txtDuiInput.addEventListener("change", async function () {

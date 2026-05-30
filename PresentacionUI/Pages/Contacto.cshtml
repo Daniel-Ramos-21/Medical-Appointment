@@ -1,4 +1,90 @@
 ﻿@page
 @model PresentacionUI.Pages.ContactoModel
 @{
+    ViewData["Title"] = "Contacto";
 }
+
+<link href="./css/estilos_Contacto.css" rel="stylesheet" />
+<section class="contacto d-flex align-items-center">
+    <div class="container text-center text-white">
+        <h1 class="display-3 fw-bold">
+            Contáctanos
+        </h1>
+        <p class="lead mt-4">
+            Estamos listos para atenderte.
+        </p>
+    </div>
+</section>
+
+
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- formulario de contacto -->
+            <div class="col-lg-7">
+                <div class="contacto-card">
+                    <h2 class="fw-bold mb-4">
+                        Envíanos un mensaje
+                    </h2>
+                    <form>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Nombre
+                            </label>
+                            <input type="text" class="form-control form-control-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Correo Electrónico
+                            </label>
+                            <input type="email" class="form-control form-control-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Mensaje
+                            </label>
+                            <textarea class="form-control" rows="6"></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-lg px-5">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Informacion general -->
+            <div class="col-lg-5">
+                <div class="contacto-info">
+                    <h3 class="fw-bold mb-4">
+                        Información
+                    </h3>
+                    <p>
+                        📍 Clínica "Francisco Palau", Chalatenango, La Laguna
+                    </p>
+
+                    <p>
+                        📞 +503 7167-2222
+                    </p>
+
+                    <p>
+                        ✉ franciscoPalau@gmail.com
+                    </p>
+
+                    <p>
+                        🕒 Lunes a Viernes
+                        7:00 AM - 8:00 PM
+                    </p>
+
+                    <hr>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d655465.4434339951!2d-89.3740790959504!3d14.20226129797116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6371aedaf26d07%3A0xe27a7d786ba360da!2sClinica%20%22Francisco%20Palau%22!5e0!3m2!1ses!2ssv!4v1780011223630!5m2!1ses!2ssv"
+                            width="100%"
+                            height="250"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,111 @@
+﻿@page
+@model PresentacionUI.Pages.HistorialPacienteModel
+@{
+    ViewData["Title"] = "Historial de Citas";
+}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Historial de Citas</h2>
+    <form method="get" class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <label class="form-label">Fecha</label>
+            <input asp-for="FechaFiltro"
+                   type="date"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Especialidad</label>
+            <select asp-for="EspecialidadFiltro"
+                    class="form-select">
+
+                <option value="">Todas las especialidades</option>
+
+                @foreach (var especialidad in Model.Especialidades)
+                {
+                    <option value="@especialidad.Id_Especialidad">
+                        @especialidad.Nombre_especialidad
+                    </option>
+                }
+
+            </select>
+        </div>
+
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit"
+                    class="btn btn-primary me-2">
+                Filtrar
+            </button>
+
+            <a asp-page="/HistorialPaciente"
+                   class="btn btn-secondary">
+                Limpiar
+            </a>
+        </div>
+
+    </form>
+
+    @if (Model.Cita.Count == 0)
+    {
+        <div class="alert alert-info">
+            No hay citas registradas.
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Médico</th>
+                    <th>Especialidad</th>
+                    <th>Estado</th>
+                    <th>Eliminar</th>
+                    <th>Descargar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cita in Model.Cita)
+                {
+                    <tr>
+                        <td>@cita.Fecha</td>
+                        <td>@cita.Hora</td>
+                        <td>
+                            Dr. @cita.Doctor.usuario.Nombre
+                            @cita.Doctor.usuario.Apellido
+                        </td>
+                        <td>
+                            @cita.Doctor.Especialidad.Nombre_especialidad
+                        </td>
+                        <td>@cita.Estado</td>
+                        <td>
+                            <form method="post"
+                                  asp-page-handler="Eliminar"
+                                  onsubmit="return confirm('¿Desea eliminar esta cita?');">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@cita.Id_Citas" />
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <a asp-page-handler="DescargarImagen"
+                                   asp-route-id="@cita.Id_Citas"
+                                   class="btn btn-success btn-sm">
+                                Descargar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<div style="height: calc(100vh - 250px);">
+</div>
